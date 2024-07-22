@@ -26,6 +26,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Create GCP credentials file
+      run: |
+        echo "${{ secrets.GCP_CREDS }}" > /github/workspace/gcp_credentials.json
+
     - name: Configure dbt profile
       run: |
         mkdir -p ~/.dbt
@@ -39,7 +43,9 @@ jobs:
                 type: bigquery
                 method: service-account
                 project: learntofly-180002
+                dataset: your_bigquery_dataset
                 threads: 1
+                keyfile: /github/workspace/gcp_credentials.json
                 timeout_seconds: 300
                 location: us-central1
                 priority: interactive
@@ -48,6 +54,5 @@ jobs:
       run: |
         dbt run
       env:
-        DBT_PROFILES_DIR: .
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDS }}
         DBT_PROFILES_DIR: ~/.dbt
+        GOOGLE_APPLICATION_CREDENTIALS: /github/workspace/gcp_credentials.json
