@@ -38,4 +38,4 @@ jobs:
         export GCP_KEY_JSON_PATH=/tmp/gcp_credentials.json
         dbt run
       env:
-        DBT_PROFILES_DIR: /home/runner/.dbt
+        DBT_PROFILES_DIR: ./
