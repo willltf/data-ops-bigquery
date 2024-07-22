@@ -28,28 +28,31 @@ jobs:
 
     - name: Create GCP credentials file
       run: |
-        echo "${{ secrets.GCP_CREDS }}" > $RUNNER_TEMP/gcp_credentials.json
+        echo "${{ secrets.GCP_CREDS }}" > /tmp/gcp_credentials.json
 
     - name: Configure dbt profile
       run: |
         mkdir -p /home/runner/.dbt
-        echo "data_ops_bigquery:
-  target: dev
-  outputs:
-    dev:
-      type: bigquery
-      method: service-account
-      project: learntofly-180002
-      dataset: your_bigquery_dataset
-      threads: 1
-      keyfile: $RUNNER_TEMP/gcp_credentials.json
-      timeout_seconds: 300
-      location: us-central1
-      priority: interactive" > /home/runner/.dbt/profiles.yml
+        echo "$DBT_PROFILES_CONTENT" > /home/runner/.dbt/profiles.yml
+      env:
+        DBT_PROFILES_CONTENT: |
+          data_ops_bigquery:
+            target: dev
+            outputs:
+              dev:
+                type: bigquery
+                method: service-account
+                project: learntofly-180002
+                dataset: your_bigquery_dataset
+                threads: 1
+                keyfile: /tmp/gcp_credentials.json
+                timeout_seconds: 300
+                location: us-central1
+                priority: interactive
 
     - name: Run dbt
       run: |
         dbt run
       env:
         DBT_PROFILES_DIR: /home/runner/.dbt
-        GOOGLE_APPLICATION_CREDENTIALS: $RUNNER_TEMP/gcp_credentials.json
+        GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp_credentials.json
