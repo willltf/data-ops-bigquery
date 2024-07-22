@@ -55,4 +55,3 @@ jobs:
         dbt run
       env:
         DBT_PROFILES_DIR: /home/runner/.dbt
-        GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp_credentials.json
