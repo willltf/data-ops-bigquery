@@ -32,8 +32,8 @@ jobs:
 
     - name: Configure dbt profile
       run: |
-        mkdir -p ~/.dbt
-        echo "$DBT_PROFILES_CONTENT" > ~/.dbt/profiles.yml
+        mkdir -p /home/runner/.dbt
+        echo "$DBT_PROFILES_CONTENT" > /home/runner/.dbt/profiles.yml
       env:
         DBT_PROFILES_CONTENT: |
           data_ops_bigquery:
@@ -54,5 +54,5 @@ jobs:
       run: |
         dbt run
       env:
-        DBT_PROFILES_DIR: ~/.dbt
+        DBT_PROFILES_DIR: /home/runner/.dbt
         GOOGLE_APPLICATION_CREDENTIALS: $RUNNER_TEMP/gcp_credentials.json
