@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: learntofly_data_lake
+    database: learntofly-180002
+    schema: "{{ var('schema_env') }}"
+    tables:
+      - name: v_program
