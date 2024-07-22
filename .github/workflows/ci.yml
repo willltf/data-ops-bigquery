@@ -33,28 +33,9 @@ jobs:
       run: |
         echo "${{ secrets.GCP_CREDS }}" > /tmp/gcp_credentials.json
 
-    - name: Configure dbt profile
-      run: |
-        mkdir -p /home/runner/.dbt
-        echo "$DBT_PROFILES_CONTENT" > /home/runner/.dbt/profiles.yml
-      env:
-        DBT_PROFILES_CONTENT: |
-          data_ops_bigquery:
-            target: dev
-            outputs:
-              dev:
-                type: bigquery
-                method: service-account
-                project: learntofly-180002
-                dataset: ltf_data_lake_hml
-                threads: 1
-                keyfile: /tmp/gcp_credentials.json
-                timeout_seconds: 300
-                location: us-central1
-                priority: interactive
-
     - name: Run dbt
       run: |
+        export GCP_KEY_JSON_PATH=/tmp/gcp_credentials.json
         dbt run
       env:
         DBT_PROFILES_DIR: /home/runner/.dbt
