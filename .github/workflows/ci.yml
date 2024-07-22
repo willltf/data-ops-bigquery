@@ -32,7 +32,7 @@ jobs:
         echo "$DBT_PROFILES_CONTENT" > ~/.dbt/profiles.yml
       env:
         DBT_PROFILES_CONTENT: |
-          default:
+          data_ops_bigquery:
             target: dev
             outputs:
               dev:
