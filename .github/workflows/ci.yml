@@ -1,4 +1,3 @@
-# .github/workflows/dbt.yml
 name: Run dbt on BigQuery
 
 on:
@@ -11,6 +10,7 @@ on:
 env:
   DBT_PROFILES_DIR: ./
   DBT_PROFILE_TARGET: hml
+
 jobs:
   run-dbt:
     runs-on: ubuntu-latest
@@ -31,12 +31,8 @@ jobs:
 
     - name: Create GCP credentials file
       run: |
-        echo "${{ secrets.GCP_CREDS }}" > /tmp/gcp_credentials.json
+        echo "${{ secrets.GCP_CREDS }}" | base64 --decode > /tmp/gcp_credentials.json
 
-    - name: Display GCP credentials file
-      run: |
-        cat /tmp/gcp_credentials.json
-        
     - name: Run dbt
       run: |
         export GCP_KEY_JSON_PATH=/tmp/gcp_credentials.json
