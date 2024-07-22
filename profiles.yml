@@ -3,7 +3,8 @@ data_ops_bigquery:
   outputs:
     hml:
       type: bigquery
-      method: oauth
+      method: service-account
+      keyfile: "{{ env_var('GCP_KEY_JSON_PATH') }}"
       project: learntofly-180002
       location: us-central1
       dataset: ltf_data_lake_hml
