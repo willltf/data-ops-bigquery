@@ -9,7 +9,6 @@ on:
 
 env:
   DBT_PROFILES_DIR: ./
-  DBT_PROFILE_TARGET: hml
 
 jobs:
   run-dbt:
@@ -39,3 +38,4 @@ jobs:
         dbt run
       env:
         DBT_PROFILES_DIR: ./
+        DBT_PROFILE_TARGET: ${{ github.ref_name }}
