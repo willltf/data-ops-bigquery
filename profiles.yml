@@ -1,4 +1,4 @@
-datalake:
+data_ops_bigquery:
   target: "{{ env_var('DBT_PROFILE_TARGET', 'hml') }}"
   outputs:
     hml:
