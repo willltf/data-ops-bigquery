@@ -40,7 +40,6 @@ jobs:
                 method: service-account
                 project: learntofly-180002
                 threads: 1
-                keyfile: /github/workspace/service-account-file.json
                 timeout_seconds: 300
                 location: us-central1
                 priority: interactive
@@ -49,6 +48,6 @@ jobs:
       run: |
         dbt run
       env:
+        DBT_PROFILES_DIR: .
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDS }}
         DBT_PROFILES_DIR: ~/.dbt
-        GOOGLE_APPLICATION_CREDENTIALS: /github/workspace/service-account-file.json
-        DBT_PROFILES_CONTENT: ${{ secrets.GCP_CREDS }}
