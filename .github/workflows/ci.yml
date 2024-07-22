@@ -22,10 +22,10 @@ jobs:
       run: |
         echo "${{ secrets.GCP_CREDS }}" | base64 --decode > /tmp/gcp_credentials.json
 
-    - name: dbt-action
-      uses: mwhitaker/dbt-action@master
-      with:
-        dbt_command: "dbt run --profiles-dir ."
+    - name: Run dbt
+      uses: docker://fishtownanalytics/dbt:latest
       env:
         GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp_credentials.json
-        DBT_BIGQUERY_TOKEN: ${{ secrets.DBT_BIGQUERY_TOKEN }}
+        DBT_PROFILES_DIR: ./
+      run: |
+        dbt run --profiles-dir .
