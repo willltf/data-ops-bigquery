@@ -28,7 +28,7 @@ jobs:
 
     - name: Create GCP credentials file
       run: |
-        echo "${{ secrets.GCP_CREDS }}" > ${{ runner.temp }}/gcp_credentials.json
+        echo "${{ secrets.GCP_CREDS }}" | jq '.' > ${{ runner.temp }}/gcp_credentials.json
 
     - name: Configure dbt profile
       run: |
