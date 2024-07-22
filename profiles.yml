@@ -20,7 +20,7 @@ data_ops_bigquery:
       dataset: ltf_data_lake_hml
       priority: batch
       threads: 1
-    prd:
+    main:
       type: bigquery
       method: service-account
       keyfile: "{{ env_var('GCP_KEY_JSON_PATH') }}"
