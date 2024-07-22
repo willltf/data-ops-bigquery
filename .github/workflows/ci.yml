@@ -8,6 +8,9 @@ on:
       - hml
   workflow_dispatch:
 
+env:
+  DBT_PROFILES_DIR: ./
+  DBT_PROFILE_TARGET: hml
 jobs:
   run-dbt:
     runs-on: ubuntu-latest
@@ -43,7 +46,7 @@ jobs:
                 type: bigquery
                 method: service-account
                 project: learntofly-180002
-                dataset: your_bigquery_dataset
+                dataset: ltf_data_lake_hml
                 threads: 1
                 keyfile: /tmp/gcp_credentials.json
                 timeout_seconds: 300
