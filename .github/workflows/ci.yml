@@ -28,7 +28,7 @@ jobs:
 
     - name: Create GCP credentials file
       run: |
-        echo "${{ secrets.GCP_CREDS }}" > $RUNNER_TEMP/gcp_credentials.json
+        echo "${{ secrets.GCP_CREDS }}" > ${{ runner.temp }}/gcp_credentials.json
 
     - name: Configure dbt profile
       run: |
@@ -45,7 +45,7 @@ jobs:
                 project: learntofly-180002
                 dataset: your_bigquery_dataset
                 threads: 1
-                keyfile: $RUNNER_TEMP/gcp_credentials.json
+                keyfile: ${{ runner.temp }}/gcp_credentials.json
                 timeout_seconds: 300
                 location: us-central1
                 priority: interactive
@@ -55,4 +55,4 @@ jobs:
         dbt run
       env:
         DBT_PROFILES_DIR: /home/runner/.dbt
-        GOOGLE_APPLICATION_CREDENTIALS: $RUNNER_TEMP/gcp_credentials.json
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/gcp_credentials.json
