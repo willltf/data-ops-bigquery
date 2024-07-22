@@ -33,22 +33,19 @@ jobs:
     - name: Configure dbt profile
       run: |
         mkdir -p /home/runner/.dbt
-        echo "$DBT_PROFILES_CONTENT" > /home/runner/.dbt/profiles.yml
-      env:
-        DBT_PROFILES_CONTENT: |
-          data_ops_bigquery:
-            target: dev
-            outputs:
-              dev:
-                type: bigquery
-                method: service-account
-                project: learntofly-180002
-                dataset: your_bigquery_dataset
-                threads: 1
-                keyfile: $RUNNER_TEMP/gcp_credentials.json
-                timeout_seconds: 300
-                location: us-central1
-                priority: interactive
+        echo "data_ops_bigquery:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: learntofly-180002
+      dataset: your_bigquery_dataset
+      threads: 1
+      keyfile: $RUNNER_TEMP/gcp_credentials.json
+      timeout_seconds: 300
+      location: us-central1
+      priority: interactive" > /home/runner/.dbt/profiles.yml
 
     - name: Run dbt
       run: |
